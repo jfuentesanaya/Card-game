@@ -17,6 +17,10 @@ class GameRepositoryImpl : GameRepository {
         return createSet().shuffled()
     }
 
+    override suspend fun getSuitPriority(): List<Suit> {
+        return Suit.values().toMutableList().shuffled()
+    }
+
 
     private fun createSet(): MutableList<Card> {
         val listOfCards = mutableListOf<Card>()

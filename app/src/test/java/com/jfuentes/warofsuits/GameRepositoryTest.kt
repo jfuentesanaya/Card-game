@@ -20,12 +20,22 @@ class GameRepositoryTest {
     }
 
     @Test
-    fun `size of list cards should be shuffled`() {
+    fun `cards list should be shuffled`() {
         runBlocking {
+            val originalList = repo.getSetOfCardsList()
             val listShuffled = repo.getSetOfCardsListShuffled()
-            val listSorted = repo.getSetOfCardsList()
 
-            Assert.assertNotEquals(listShuffled, listSorted)
+            Assert.assertNotEquals(originalList, listShuffled)
+        }
+    }
+
+    @Test
+    fun `suit priority should be shuffled`() {
+        runBlocking {
+            val list1 = repo.getSuitPriority()
+            val list2 = repo.getSuitPriority()
+
+            Assert.assertNotEquals(list1, list2)
         }
     }
 }
