@@ -1,4 +1,4 @@
-package com.jfuentes.warofsuits.data.model
+package com.jfuentes.warofsuits.domain.model
 
 /**
  * Created by Juan Fuentes on 06/08/2020.
@@ -17,9 +17,13 @@ class Card(val number: Int, val suit: Suit){
 }
 
 
-enum class Suit {
-    CLUBS,
-    DIAMONDS,
-    HEARTS,
-    SPADES;
+enum class Suit (internal val suitType:String){
+    CLUBS("CLUBS"),
+    DIAMONDS("DIAMONDS"),
+    HEARTS("HEARTS"),
+    SPADES("SPADES");
+
+    companion object {
+        private val map = values().associateBy(Suit::suitType)
+    }
 }

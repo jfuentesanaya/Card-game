@@ -1,6 +1,11 @@
 package com.jfuentes.warofsuits
 
 import com.jfuentes.warofsuits.data.GameRepositoryImpl
+import com.jfuentes.warofsuits.data.local.CardDao
+import com.jfuentes.warofsuits.data.model.CardEntity
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Test
@@ -10,32 +15,35 @@ import org.junit.Test
  */
 class GameRepositoryTest {
 
-    private val repo = GameRepositoryImpl()
+    private val cardDao = mockk<CardDao>(relaxed = true)
+    private val repo = GameRepositoryImpl(cardDao)
 
     @Test
-    fun `size of list cards created should be 52`() {
-        runBlocking {
-            Assert.assertEquals(repo.getSetOfCardsList().size, 52)
-        }
+    fun `should getAll cards of dao when repo is executed`() = runBlocking {
+        coEvery { cardDao.getAll() } returns emptyList()
+        repo.getSetOfCardsList()
+
+        coVerify(exactly = 1) { cardDao.getAll() }
     }
 
     @Test
-    fun `cards list should be shuffled`() {
-        runBlocking {
-            val originalList = repo.getSetOfCardsList()
-            val listShuffled = repo.getSetOfCardsListShuffled()
+    fun `should map dao object to model when repo is executed`() = runBlocking {
+        coEvery { cardDao.getAll() } returns fakeList
+        val cardList = repo.getSetOfCardsList()
 
-            Assert.assertNotEquals(originalList, listShuffled)
-        }
+        Assert.assertEquals(cardList[0].number, fakeList[0].num)
+        Assert.assertEquals(cardList[0].suit.suitType, fakeList[0].suit)
     }
 
     @Test
-    fun `suit priority should be shuffled`() {
-        runBlocking {
-            val list1 = repo.getSuitPriority()
-            val list2 = repo.getSuitPriority()
+    fun `cards list should be shuffled`() = runBlocking {
+        coEvery { cardDao.getAll() } returns fakeList
+        val listShuffled = repo.getSetOfCardsListShuffled()
 
-            Assert.assertNotEquals(list1, list2)
-        }
+        Assert.assertNotEquals(fakeList, listShuffled)
+    }
+
+    companion object{
+        val fakeList = listOf(CardEntity(2, "HEARTS"), CardEntity(3, "HEARTS"), CardEntity(5, "DIAMONDS"))
     }
 }
