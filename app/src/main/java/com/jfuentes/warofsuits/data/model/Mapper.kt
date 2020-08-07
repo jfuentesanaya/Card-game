@@ -9,7 +9,3 @@ import com.jfuentes.warofsuits.domain.model.Suit
 fun CardEntity.toCard() : Card{
     return Card(num, Suit.valueOf(suit))
 }
-
-fun Card.toCardEntity() : CardEntity{
-    return CardEntity(number, suit.suitType)
-}

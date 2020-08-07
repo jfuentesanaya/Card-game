@@ -1,7 +1,9 @@
 package com.jfuentes.warofsuits
 
 import android.app.Application
-import com.jfuentes.warofsuits.di.appModule
+import com.jfuentes.warofsuits.di.databaseModule
+import com.jfuentes.warofsuits.di.repositoryModule
+import com.jfuentes.warofsuits.di.useCasesModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -14,7 +16,7 @@ class BaseApplication : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@BaseApplication)
-            modules(listOf(appModule))
+            modules(databaseModule, repositoryModule, useCasesModule)
         }
     }
 

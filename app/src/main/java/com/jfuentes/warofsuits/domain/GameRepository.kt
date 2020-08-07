@@ -1,7 +1,6 @@
 package com.jfuentes.warofsuits.domain
 
 import com.jfuentes.warofsuits.domain.model.Card
-import com.jfuentes.warofsuits.domain.model.Suit
 
 /**
  * Created by Juan Fuentes on 06/08/2020.
