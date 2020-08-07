@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
             android:text="WIN"
-            android:visibility="@{model.player2WinMessageVisibility}"
+            reverse_visibility="@{model.player1WinMessageVisibility}"
             app:layout_constraintBottom_toTopOf="@+id/iv_player2_image"
             app:layout_constraintEnd_toEndOf="@id/tv_name_player2"
             app:layout_constraintStart_toStartOf="@id/tv_name_player2" />
@@ -96,6 +96,16 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:text="Player 1" />
 
+        <TextView
+            style="@style/Base.TextAppearance.Text.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{model.player1CardsWon}"
+            app:layout_constraintEnd_toEndOf="@id/tv_name_player1"
+            app:layout_constraintStart_toStartOf="@id/tv_name_player1"
+            app:layout_constraintTop_toBottomOf="@id/tv_name_player1"
+            tools:text="1 cards won" />
+
         <ImageView
             android:id="@+id/iv_player2_image"
             android:layout_width="wrap_content"
@@ -107,14 +117,24 @@
 
         <TextView
             android:id="@+id/tv_name_player2"
+            style="@style/Base.TextAppearance.Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
-            style="@style/Base.TextAppearance.Text"
             android:text="@{model.player2.name}"
             app:layout_constraintBottom_toBottomOf="@id/tv_name_player1"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:text="Player 2"/>
+            tools:text="Player 2" />
+
+        <TextView
+            style="@style/Base.TextAppearance.Text.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{model.player2CardsWon}"
+            app:layout_constraintEnd_toEndOf="@id/tv_name_player2"
+            app:layout_constraintStart_toStartOf="@id/tv_name_player2"
+            app:layout_constraintTop_toBottomOf="@id/tv_name_player2"
+            tools:text="3 cards won" />
 
         <TextView
             android:id="@+id/tv_priority_suit"

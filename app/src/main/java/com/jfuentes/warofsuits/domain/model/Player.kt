@@ -6,5 +6,5 @@ package com.jfuentes.warofsuits.domain.model
 data class Player(
     val name: String,
     var playCardsList: MutableList<Card> = mutableListOf(),
-    val discardedCardsList: MutableList<Card>? = mutableListOf()
+    val discardedCardsList: MutableList<Card> = mutableListOf()
 )

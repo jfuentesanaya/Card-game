@@ -2,4 +2,6 @@
     <string name="app_name">WarOfSuits</string>
     <string name="start_game">Start game</string>
     <string name="next_round">Next round</string>
+    <string name="sut_priority">Suit priority</string>
+    <string name="games_won">Games won: %1$d</string>
 </resources>
