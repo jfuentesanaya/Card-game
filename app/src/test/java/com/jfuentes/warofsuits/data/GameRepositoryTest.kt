@@ -1,6 +1,5 @@
-package com.jfuentes.warofsuits
+package com.jfuentes.warofsuits.data
 
-import com.jfuentes.warofsuits.data.GameRepositoryImpl
 import com.jfuentes.warofsuits.data.local.CardDao
 import com.jfuentes.warofsuits.data.model.CardEntity
 import io.mockk.coEvery

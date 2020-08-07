@@ -6,6 +6,10 @@ import com.jfuentes.warofsuits.data.GameRepositoryImpl
 import com.jfuentes.warofsuits.data.local.AppDataBase
 import com.jfuentes.warofsuits.data.local.CardDao
 import com.jfuentes.warofsuits.domain.GameRepository
+import com.jfuentes.warofsuits.domain.usecase.GetSetOfCardsUseCase
+import com.jfuentes.warofsuits.presentation.viewmodel.MainVM
+import org.koin.android.ext.koin.androidApplication
+import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 /**
@@ -14,9 +18,11 @@ import org.koin.dsl.module
 
 val appModule = module {
 
-    single { provideDataBase(get()) }
+    single { provideDataBase(androidApplication()) }
     single { provideCardDao(get()) }
     single { provideRepo(get()) }
+    single { provideUseCase(get())}
+    viewModel { MainVM(get()) }
 }
 
 private fun provideDataBase(application: Application) =
@@ -28,4 +34,8 @@ private fun provideCardDao(database: AppDataBase): CardDao {
 
 private fun provideRepo(cardDao: CardDao): GameRepository {
     return GameRepositoryImpl(cardDao)
+}
+
+private fun provideUseCase(repo: GameRepository): GetSetOfCardsUseCase {
+    return GetSetOfCardsUseCase(repo)
 }
