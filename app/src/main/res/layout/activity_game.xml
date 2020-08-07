@@ -18,6 +18,7 @@
 
         <ImageView
             android:id="@+id/iv_card_player1"
+            android:layout_marginTop="40dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/reverse_card"
@@ -30,7 +31,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/reverse_card"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/iv_card_player1" />
 
         <TextView
             android:id="@+id/tv_player1_card"
@@ -41,7 +42,7 @@
             style="@style/Base.TextAppearance.Text"
             android:layout_marginTop="100dp"
             tools:text="2 HEARTS"
-            android:text="@{model.cardToPlay1}"/>
+            android:text="@{model.cardToPlay1.toString()}"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -50,46 +51,81 @@
             app:layout_constraintEnd_toEndOf="parent"
             style="@style/Base.TextAppearance.Text"
             tools:text="5 DIAMONDS"
-            android:text="@{model.cardToPlay2}"/>
+            android:text="@{model.cardToPlay2.toString()}"/>
+
+        <TextView
+            style="@style/Base.TextAppearance.Text.Alert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="WIN"
+            android:visibility="@{model.player1WinMessageVisibility}"
+            app:layout_constraintBottom_toTopOf="@+id/iv_player1_image"
+            app:layout_constraintEnd_toEndOf="@id/tv_name_player1"
+            app:layout_constraintStart_toStartOf="@id/tv_name_player1" />
+
+        <TextView
+            style="@style/Base.TextAppearance.Text.Alert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="WIN"
+            android:visibility="@{model.player2WinMessageVisibility}"
+            app:layout_constraintBottom_toTopOf="@+id/iv_player2_image"
+            app:layout_constraintEnd_toEndOf="@id/tv_name_player2"
+            app:layout_constraintStart_toStartOf="@id/tv_name_player2" />
 
         <ImageView
+            android:id="@+id/iv_player1_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_baseline_android_24"
-            app:layout_constraintBottom_toTopOf="@id/tv_player1"
-            app:layout_constraintEnd_toEndOf="@id/tv_player1"
-            app:layout_constraintStart_toStartOf="@id/tv_player1" />
+            app:layout_constraintBottom_toTopOf="@id/tv_name_player1"
+            app:layout_constraintEnd_toEndOf="@id/tv_name_player1"
+            app:layout_constraintStart_toStartOf="@id/tv_name_player1" />
 
         <TextView
-            android:id="@+id/tv_player1"
+            android:id="@+id/tv_name_player1"
             style="@style/Base.TextAppearance.Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginBottom="30dp"
             android:text="@{model.player1.name}"
-            app:layout_constraintBottom_toTopOf="@+id/btn_next_round"
+            app:layout_constraintBottom_toTopOf="@+id/tv_priority_suit"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="Player 1" />
 
         <ImageView
+            android:id="@+id/iv_player2_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_baseline_android_24"
-            app:layout_constraintBottom_toTopOf="@id/tv_player2"
-            app:layout_constraintEnd_toEndOf="@id/tv_player2"
-            app:layout_constraintStart_toStartOf="@id/tv_player2" />
+            app:layout_constraintBottom_toTopOf="@id/tv_name_player2"
+            app:layout_constraintEnd_toEndOf="@id/tv_name_player2"
+            app:layout_constraintStart_toStartOf="@id/tv_name_player2" />
 
         <TextView
-            android:id="@+id/tv_player2"
+            android:id="@+id/tv_name_player2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
             style="@style/Base.TextAppearance.Text"
             android:text="@{model.player2.name}"
-            app:layout_constraintBottom_toBottomOf="@id/tv_player1"
+            app:layout_constraintBottom_toBottomOf="@id/tv_name_player1"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="Player 2"/>
+
+        <TextView
+            android:id="@+id/tv_priority_suit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/btn_next_round"
+            app:layout_constraintStart_toStartOf="@id/btn_next_round"
+            app:layout_constraintEnd_toEndOf="@id/btn_next_round"
+            tools:text="Suit priotiry"
+            android:layout_marginBottom="10dp"
+            android:text="@{model.getSuitPriority}"/>
 
         <Button
             android:id="@+id/btn_next_round"
@@ -98,6 +134,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:onClick="@{() -> model.onNextRoundClick()}"
+            android:enabled="@{model.buttonEnable}"
             android:text="@string/next_round"
             app:layout_constraintEnd_toEndOf="parent"/>
 

@@ -1,6 +1,7 @@
 package com.jfuentes.warofsuits.di
 
 import com.jfuentes.warofsuits.domain.GameRepository
+import com.jfuentes.warofsuits.domain.usecase.GetHighestCardUseCase
 import com.jfuentes.warofsuits.domain.usecase.GetSetOfCardsUseCase
 import org.koin.dsl.module
 
@@ -9,9 +10,14 @@ import org.koin.dsl.module
  */
 val useCasesModule = module {
 
-    single { provideUseCase(get())}
+    single { provideSetOfCardsUseCase(get())}
+    single { provideHighestCardUseCase() }
 }
 
-private fun provideUseCase(repo: GameRepository): GetSetOfCardsUseCase {
+private fun provideSetOfCardsUseCase(repo: GameRepository): GetSetOfCardsUseCase {
     return GetSetOfCardsUseCase(repo)
+}
+
+private fun provideHighestCardUseCase(): GetHighestCardUseCase {
+    return GetHighestCardUseCase()
 }
