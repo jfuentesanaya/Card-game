@@ -15,7 +15,6 @@ data class Card constructor(val number: Int, val suit: Suit){
         }
     }
 
-
     override fun toString(): String {
         return when(number){
             11 -> "J $suit"

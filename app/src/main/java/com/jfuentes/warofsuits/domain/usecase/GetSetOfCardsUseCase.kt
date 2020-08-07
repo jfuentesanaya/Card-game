@@ -13,6 +13,16 @@ class GetSetOfCardsUseCase(private val repository: GameRepository) {
         return repository.getSetOfCardsListShuffled()
     }
 
+    suspend fun getSetOfCardsSplit(): List<List<Card>> {
+        val listShuffled = getSetOfCardsShuffled()
+        val halfList = (listShuffled.size - 1) / 2
+
+        val firstHalf = listShuffled.slice(0..halfList)
+        val secondHalf = listShuffled.slice(halfList + 1 until listShuffled.size)
+
+        return listOf(firstHalf, secondHalf)
+    }
+
     fun getSuitPriority(): List<Suit> {
         return Suit.values().toMutableList().shuffled()
     }

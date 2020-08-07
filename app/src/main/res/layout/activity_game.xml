@@ -17,6 +17,7 @@
         tools:context=".presentation.activity.GameActivity">
 
         <ImageView
+            android:id="@+id/iv_card_player1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/reverse_card"
@@ -24,11 +25,32 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+            android:id="@+id/iv_card_player2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/reverse_card"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_player1_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/iv_card_player1"
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/Base.TextAppearance.Text"
+            android:layout_marginTop="100dp"
+            tools:text="2 HEARTS"
+            android:text="@{model.cardToPlay1}"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/tv_player1_card"
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/Base.TextAppearance.Text"
+            tools:text="5 DIAMONDS"
+            android:text="@{model.cardToPlay2}"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -75,7 +97,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="Next round"
+            android:onClick="@{() -> model.onNextRoundClick()}"
+            android:text="@string/next_round"
             app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
