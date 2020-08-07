@@ -1,6 +1,8 @@
 package com.jfuentes.warofsuits.presentation.viewmodel
 
 import android.app.Application
+import android.content.Context
+import android.content.DialogInterface
 import android.util.Log
 import android.view.View
 import androidx.annotation.StringRes
@@ -9,15 +11,14 @@ import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jfuentes.warofsuits.R
 import com.jfuentes.warofsuits.domain.model.Card
 import com.jfuentes.warofsuits.domain.model.Player
 import com.jfuentes.warofsuits.domain.usecase.GetHighestCardUseCase
 import com.jfuentes.warofsuits.domain.usecase.GetSetOfCardsUseCase
+import com.jfuentes.warofsuits.presentation.utils.DialogHelper.createDialog
 import kotlinx.coroutines.launch
-import org.koin.dsl.koinApplication
 
 /**
  * Created by Juan Fuentes on 07/08/2020.
@@ -39,10 +40,13 @@ class GameVM(
 
     val player1CardsWon = ObservableField("")
     val player2CardsWon = ObservableField("")
+    val winMessage = ObservableField(getText(R.string.win))
 
     init {
+       startGame()
+    }
 
-
+    private fun startGame(){
         viewModelScope.launch {
             val listOfSplitCards = getSetOfCardsUseCase.getSetOfCardsSplit()
             player1.playCardsList = listOfSplitCards.first().toMutableList()
@@ -51,11 +55,13 @@ class GameVM(
         }
     }
 
-    fun onNextRoundClick() {
+    fun onNextRoundClick(view:View) {
         if (player1.playCardsList.isNotEmpty() && player2.playCardsList.isNotEmpty()) {
             nextRound()
         } else {
             buttonEnable.set(false)
+            winMessage.set(getText(R.string.game_winner))
+            showRestartDialog(view.context)
         }
     }
 
@@ -113,9 +119,14 @@ class GameVM(
     private fun getText(@StringRes idRes: Int): String {
         return appication.baseContext.getString(idRes)
     }
-}
 
-@BindingAdapter("reverse_visibility")
-fun View.reverseVisibility(visibility: ObservableInt) {
-    this.visibility = if (visibility.get() == View.VISIBLE) View.INVISIBLE else View.VISIBLE
+    private fun showRestartDialog(context: Context) {
+        context.createDialog(
+            R.string.restart_game,
+            R.string.yes,
+            R.string.no,
+            DialogInterface.OnClickListener { _, _ -> startGame() },
+            false
+        ).show()
+    }
 }

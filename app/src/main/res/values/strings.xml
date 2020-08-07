@@ -4,4 +4,9 @@
     <string name="next_round">Next round</string>
     <string name="sut_priority">Suit priority</string>
     <string name="games_won">Games won: %1$d</string>
+    <string name="win">WIN</string>
+    <string name="game_winner">WINNER</string>
+    <string name="restart_game">Restart game?</string>
+    <string name="yes">Yes</string>
+    <string name="no">no</string>
 </resources>
