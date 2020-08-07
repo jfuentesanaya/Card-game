@@ -4,6 +4,7 @@ import android.app.Application
 import com.jfuentes.warofsuits.di.databaseModule
 import com.jfuentes.warofsuits.di.repositoryModule
 import com.jfuentes.warofsuits.di.useCasesModule
+import com.jfuentes.warofsuits.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -16,7 +17,7 @@ class BaseApplication : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@BaseApplication)
-            modules(databaseModule, repositoryModule, useCasesModule)
+            modules(databaseModule, repositoryModule, useCasesModule, viewModelModule)
         }
     }
 

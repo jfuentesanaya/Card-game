@@ -1,22 +1,16 @@
 package com.jfuentes.warofsuits.presentation.viewmodel
 
-import android.util.Log
+import android.view.View
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.jfuentes.warofsuits.domain.usecase.GetSetOfCardsUseCase
-import kotlinx.coroutines.launch
+import com.jfuentes.warofsuits.presentation.activity.GameActivity
 
 /**
  * Created by Juan Fuentes on 07/08/2020.
  */
-class MainVM(private val getSetOfCardsUseCase: GetSetOfCardsUseCase) : ViewModel() {
+class MainVM() : ViewModel() {
 
-
-    fun onClickStartGame() {
-        viewModelScope.launch {
-            val list = getSetOfCardsUseCase.getSetOfCardsShuffled()
-            Log.d("Cards: ", list.toString())
-        }
+    fun onClickStartGame(view: View) {
+        val intent = GameActivity.getCallingIntent(view.context)
+        view.context.startActivity(intent)
     }
-
 }

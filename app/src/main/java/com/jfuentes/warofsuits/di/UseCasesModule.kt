@@ -2,8 +2,6 @@ package com.jfuentes.warofsuits.di
 
 import com.jfuentes.warofsuits.domain.GameRepository
 import com.jfuentes.warofsuits.domain.usecase.GetSetOfCardsUseCase
-import com.jfuentes.warofsuits.presentation.viewmodel.MainVM
-import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 /**
@@ -12,7 +10,6 @@ import org.koin.dsl.module
 val useCasesModule = module {
 
     single { provideUseCase(get())}
-    viewModel { MainVM(get()) }
 }
 
 private fun provideUseCase(repo: GameRepository): GetSetOfCardsUseCase {

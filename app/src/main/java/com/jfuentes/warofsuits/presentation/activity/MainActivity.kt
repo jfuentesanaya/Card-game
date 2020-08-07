@@ -1,4 +1,4 @@
-package com.jfuentes.warofsuits.presentation
+package com.jfuentes.warofsuits.presentation.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

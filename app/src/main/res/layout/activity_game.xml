@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="model"
+            type="com.jfuentes.warofsuits.presentation.viewmodel.GameVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/green"
+        android:padding="20dp"
+        tools:context=".presentation.activity.GameActivity">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/reverse_card"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/reverse_card"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_android_24"
+            app:layout_constraintBottom_toTopOf="@id/tv_player1"
+            app:layout_constraintEnd_toEndOf="@id/tv_player1"
+            app:layout_constraintStart_toStartOf="@id/tv_player1" />
+
+        <TextView
+            android:id="@+id/tv_player1"
+            style="@style/Base.TextAppearance.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="30dp"
+            android:text="@{model.player1.name}"
+            app:layout_constraintBottom_toTopOf="@+id/btn_next_round"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Player 1" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_android_24"
+            app:layout_constraintBottom_toTopOf="@id/tv_player2"
+            app:layout_constraintEnd_toEndOf="@id/tv_player2"
+            app:layout_constraintStart_toStartOf="@id/tv_player2" />
+
+        <TextView
+            android:id="@+id/tv_player2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            style="@style/Base.TextAppearance.Text"
+            android:text="@{model.player2.name}"
+            app:layout_constraintBottom_toBottomOf="@id/tv_player1"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Player 2"/>
+
+        <Button
+            android:id="@+id/btn_next_round"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Next round"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+
+
