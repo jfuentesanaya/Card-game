@@ -1,5 +1,6 @@
 package com.jfuentes.warofsuits.domain.model
 
+import com.jfuentes.warofsuits.R
 import java.lang.IllegalArgumentException
 import java.lang.NumberFormatException
 
@@ -15,6 +16,8 @@ data class Card constructor(val number: Int, val suit: Suit){
         }
     }
 
+    val image = suit.toImage()
+
     override fun toString(): String {
         return when(number){
             11 -> "J $suit"
@@ -22,6 +25,15 @@ data class Card constructor(val number: Int, val suit: Suit){
             13 -> "K $suit"
             14 -> "A $suit"
             else -> "$number $suit"
+        }
+    }
+
+    private fun Suit.toImage(): Int {
+        return when (this) {
+            Suit.CLUBS -> R.drawable.ic_club
+            Suit.DIAMONDS -> R.drawable.ic_diamond
+            Suit.HEARTS -> R.drawable.ic_heart
+            Suit.SPADES -> R.drawable.ic_spade
         }
     }
 }

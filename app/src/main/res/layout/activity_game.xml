@@ -17,43 +17,43 @@
         tools:context=".presentation.activity.GameActivity">
 
         <ImageView
-            android:id="@+id/iv_card_player1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/iv_discarded_card_player1"
+            android:layout_width="@dimen/card_width_size"
+            android:layout_height="@dimen/card_height_size"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:src="@drawable/reverse_card"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/iv_card_player2"
+        <include
+            android:id="@+id/card_player1"
+            layout="@layout/card_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="40dp"
+            app:card="@{model.cardToPlay1}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_discarded_card_player1" />
+
+        <ImageView
+            android:id="@+id/iv_discarded_card_player2"
+            android:layout_width="@dimen/card_width_size"
+            android:layout_height="@dimen/card_height_size"
             android:layout_marginEnd="15dp"
             android:src="@drawable/reverse_card"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/iv_card_player1" />
+            app:layout_constraintTop_toTopOf="@id/iv_discarded_card_player1" />
 
-        <TextView
-            android:id="@+id/tv_player1_card"
+        <include
+            android:id="@+id/card_player2"
+            layout="@layout/card_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/iv_card_player1"
-            app:layout_constraintStart_toStartOf="parent"
-            style="@style/Base.TextAppearance.Text"
-            android:layout_marginTop="100dp"
-            tools:text="2 HEARTS"
-            android:text="@{model.cardToPlay1.toString()}"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/tv_player1_card"
-            app:layout_constraintEnd_toEndOf="parent"
-            style="@style/Base.TextAppearance.Text"
-            tools:text="5 DIAMONDS"
-            android:text="@{model.cardToPlay2.toString()}"/>
+            app:card="@{model.cardToPlay2}"
+            app:layout_constraintEnd_toEndOf="@id/iv_discarded_card_player2"
+            app:layout_constraintTop_toTopOf="@id/card_player1" />
 
         <TextView
             style="@style/Base.TextAppearance.Text.Alert"

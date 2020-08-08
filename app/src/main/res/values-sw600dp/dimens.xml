@@ -2,7 +2,10 @@
 <resources>
     <dimen name="text_regular">44sp</dimen>
     <dimen name="text_small">38sp</dimen>
+    <dimen name="text_big">65sp</dimen>
     <dimen name="text_enormous">80sp</dimen>
     <dimen name="general_padding">60sp</dimen>
+    <dimen name="card_width_size">200sp</dimen>
+    <dimen name="card_height_size">250sp</dimen>
 
 </resources>
