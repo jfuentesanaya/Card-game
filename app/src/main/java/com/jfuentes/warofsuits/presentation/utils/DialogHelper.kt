@@ -15,13 +15,19 @@ object DialogHelper {
         @StringRes messageId: Int,
         @StringRes positiveButtonText: Int,
         @StringRes negativeButtonText: Int,
+        @StringRes title: Int? = null,
         positiveListener: DialogInterface.OnClickListener?,
         cancelable: Boolean = true
     ): AlertDialog.Builder {
-        return AlertDialog.Builder(this)
+        val dialog = AlertDialog.Builder(this)
             .setMessage(messageId)
             .setCancelable(cancelable)
             .setPositiveButton(positiveButtonText, positiveListener)
             .setNegativeButton(negativeButtonText) { dialog, _ -> dialog.dismiss() }
+
+        if (title != null) {
+            dialog.setTitle(title)
+        }
+        return dialog
     }
 }

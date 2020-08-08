@@ -13,7 +13,6 @@ import androidx.lifecycle.viewModelScope
 import com.jfuentes.warofsuits.R
 import com.jfuentes.warofsuits.domain.model.Card
 import com.jfuentes.warofsuits.domain.model.Player
-import com.jfuentes.warofsuits.domain.model.Suit
 import com.jfuentes.warofsuits.domain.model.clearCards
 import com.jfuentes.warofsuits.domain.usecase.GetHighestCardUseCase
 import com.jfuentes.warofsuits.domain.usecase.GetSetOfCardsUseCase
@@ -24,10 +23,10 @@ import kotlinx.coroutines.launch
  * Created by Juan Fuentes on 07/08/2020.
  */
 class GameVM(
-    private val appication:Application,
+    application: Application,
     private val getSetOfCardsUseCase: GetSetOfCardsUseCase,
     private val getHighestCardUseCase: GetHighestCardUseCase
-) : AndroidViewModel(appication) {
+) : AndroidViewModel(application) {
 
     private val player1 = Player("Player 1")
     private val player2 = Player("Player 2")
@@ -42,8 +41,8 @@ class GameVM(
 
     val buttonEnable = ObservableBoolean(true)
 
-    val player1VM = PlayerVM(appication, player1)
-    val player2VM = PlayerVM(appication, player2)
+    val player1VM = PlayerVM(getApplication(), player1)
+    val player2VM = PlayerVM(getApplication(), player2)
 
     var suitPriorityVM = ObservableField<SuitPriorityVM>()
 
@@ -135,8 +134,8 @@ class GameVM(
             R.string.restart_game,
             R.string.yes,
             R.string.no,
-            DialogInterface.OnClickListener { _, _ -> resetGame() },
-            false
+            positiveListener = DialogInterface.OnClickListener { _, _ -> resetGame() },
+            cancelable = false
         ).show()
     }
 

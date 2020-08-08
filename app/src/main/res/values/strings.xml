@@ -8,5 +8,7 @@
     <string name="game_winner">WINNER</string>
     <string name="restart_game">Restart game?</string>
     <string name="yes">Yes</string>
-    <string name="no">no</string>
+    <string name="no">No</string>
+    <string name="sure">Are you sure?</string>
+    <string name="exit">Exit</string>
 </resources>
