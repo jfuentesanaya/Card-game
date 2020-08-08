@@ -8,3 +8,8 @@ data class Player(
     var playCardsList: MutableList<Card> = mutableListOf(),
     val discardedCardsList: MutableList<Card> = mutableListOf()
 )
+
+fun Player.clearCards(){
+    playCardsList.clear()
+    discardedCardsList.clear()
+}

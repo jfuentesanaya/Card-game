@@ -6,7 +6,6 @@ import android.content.DialogInterface
 import android.util.Log
 import android.view.View
 import androidx.annotation.StringRes
-import androidx.databinding.BindingAdapter
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
@@ -15,6 +14,7 @@ import androidx.lifecycle.viewModelScope
 import com.jfuentes.warofsuits.R
 import com.jfuentes.warofsuits.domain.model.Card
 import com.jfuentes.warofsuits.domain.model.Player
+import com.jfuentes.warofsuits.domain.model.clearCards
 import com.jfuentes.warofsuits.domain.usecase.GetHighestCardUseCase
 import com.jfuentes.warofsuits.domain.usecase.GetSetOfCardsUseCase
 import com.jfuentes.warofsuits.presentation.utils.DialogHelper.createDialog
@@ -38,9 +38,11 @@ class GameVM(
     val player1WinMessageVisibility = ObservableInt(View.INVISIBLE)
     val buttonEnable = ObservableBoolean(true)
 
-    val player1CardsWon = ObservableField("")
-    val player2CardsWon = ObservableField("")
+    val player1CardsWonText = ObservableField("")
+    val player2CardsWonText = ObservableField("")
     val winMessage = ObservableField(getText(R.string.win))
+
+    val suiPriority = ObservableField("")
 
     init {
        startGame()
@@ -48,6 +50,7 @@ class GameVM(
 
     private fun startGame(){
         viewModelScope.launch {
+            suiPriority.set(getText(R.string.sut_priority) + getSetOfCardsUseCase.getSuitPriority().toString())
             val listOfSplitCards = getSetOfCardsUseCase.getSetOfCardsSplit()
             player1.playCardsList = listOfSplitCards.first().toMutableList()
             player2.playCardsList = listOfSplitCards.last().toMutableList()
@@ -100,21 +103,20 @@ class GameVM(
     private fun setWinnerVisibility(winnerCard: Card, card1: Card, card2: Card) {
         when (winnerCard) {
             card1 -> {
-                player1.discardedCardsList.add(card1)
-                player1WinMessageVisibility.set(View.VISIBLE)
-                player1CardsWon.set(String.format(getText(R.string.games_won), player1.discardedCardsList.size))
+                winnerVisibility(player1, card1, player1CardsWonText, true)
             }
             card2 -> {
-                player2.discardedCardsList.add(card2)
-                player1WinMessageVisibility.set(View.INVISIBLE)
-                player2CardsWon.set(String.format(getText(R.string.games_won), player2.discardedCardsList.size))
+                winnerVisibility(player2, card2, player2CardsWonText, false)
             }
             else -> Log.e("Error", "This case shouldn't happen, some player has to win")
         }
     }
 
-    val getSuitPriority =  getText(R.string.sut_priority) + getSetOfCardsUseCase.getSuitPriority().toString()
-
+    private fun winnerVisibility(player: Player, card: Card, playerText: ObservableField<String>, isPlayer1Winner: Boolean) {
+        player.discardedCardsList.add(card)
+        player1WinMessageVisibility.set(if (isPlayer1Winner) View.VISIBLE else View.INVISIBLE)
+        playerText.set(String.format(getText(R.string.games_won), player.discardedCardsList.size))
+    }
 
     private fun getText(@StringRes idRes: Int): String {
         return appication.baseContext.getString(idRes)
@@ -125,8 +127,18 @@ class GameVM(
             R.string.restart_game,
             R.string.yes,
             R.string.no,
-            DialogInterface.OnClickListener { _, _ -> startGame() },
+            DialogInterface.OnClickListener { _, _ -> resetGame() },
             false
         ).show()
+    }
+
+    private fun resetGame() {
+        player1.clearCards()
+        player2.clearCards()
+        buttonEnable.set(true)
+        player1CardsWonText.set("")
+        player2CardsWonText.set("")
+        winMessage.set(getText(R.string.win))
+        startGame()
     }
 }
