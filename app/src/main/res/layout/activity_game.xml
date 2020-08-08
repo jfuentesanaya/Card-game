@@ -31,9 +31,11 @@
             layout="@layout/card_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
             android:layout_marginTop="40dp"
+            android:visibility="@{model.cardPlayerVisibility}"
             app:card="@{model.cardToPlay1}"
+            app:layout_constraintEnd_toStartOf="@+id/card_player2"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_discarded_card_player1" />
 
@@ -51,9 +53,12 @@
             android:id="@+id/card_player2"
             layout="@layout/card_layout"
             android:layout_width="wrap_content"
+            android:visibility="@{model.cardPlayerVisibility}"
             android:layout_height="wrap_content"
             app:card="@{model.cardToPlay2}"
-            app:layout_constraintEnd_toEndOf="@id/iv_discarded_card_player2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/card_player1"
             app:layout_constraintTop_toTopOf="@id/card_player1" />
 
         <include
@@ -81,21 +86,22 @@
             app:layout_constraintTop_toTopOf="@id/layout_player1"
             app:model="@{model.player2VM}" />
 
-        <TextView
+
+        <include
             android:id="@+id/tv_priority_suit"
+            layout="@layout/suit_priority_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="@{model.suiPriority}"
             app:layout_constraintBottom_toTopOf="@id/btn_next_round"
-            app:layout_constraintEnd_toEndOf="@id/btn_next_round"
-            app:layout_constraintStart_toStartOf="@id/btn_next_round"
-            tools:text="Suit priotiry" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:model="@{model.suitPriorityVM}" />
 
         <Button
             android:id="@+id/btn_next_round"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
             android:enabled="@{model.buttonEnable}"
             android:onClick="@{(v) -> model.onNextRoundClick(v)}"
             android:text="@string/next_round"

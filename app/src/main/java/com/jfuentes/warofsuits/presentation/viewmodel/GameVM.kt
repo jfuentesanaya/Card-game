@@ -13,6 +13,7 @@ import androidx.lifecycle.viewModelScope
 import com.jfuentes.warofsuits.R
 import com.jfuentes.warofsuits.domain.model.Card
 import com.jfuentes.warofsuits.domain.model.Player
+import com.jfuentes.warofsuits.domain.model.Suit
 import com.jfuentes.warofsuits.domain.model.clearCards
 import com.jfuentes.warofsuits.domain.usecase.GetHighestCardUseCase
 import com.jfuentes.warofsuits.domain.usecase.GetSetOfCardsUseCase
@@ -37,12 +38,14 @@ class GameVM(
     val discardCardPlayer1Visibility = ObservableInt(View.INVISIBLE)
     val discardCardPlayer2Visibility = ObservableInt(View.INVISIBLE)
 
-    val buttonEnable = ObservableBoolean(true)
+    val cardPlayerVisibility = ObservableInt(View.INVISIBLE)
 
-    val suiPriority = ObservableField("")
+    val buttonEnable = ObservableBoolean(true)
 
     val player1VM = PlayerVM(appication, player1)
     val player2VM = PlayerVM(appication, player2)
+
+    var suitPriorityVM = ObservableField<SuitPriorityVM>()
 
     init {
        startGame()
@@ -50,9 +53,7 @@ class GameVM(
 
     private fun startGame() {
         viewModelScope.launch {
-            suiPriority.set(
-                appication.getString(R.string.sut_priority) + getSetOfCardsUseCase.getSuitPriority().toString()
-            )
+            suitPriorityVM.set(SuitPriorityVM(getSetOfCardsUseCase.getSuitPriority()))
             val listOfSplitCards = getSetOfCardsUseCase.getSetOfCardsSplit()
             player1.playCardsList = listOfSplitCards.first().toMutableList()
             player2.playCardsList = listOfSplitCards.last().toMutableList()
@@ -61,8 +62,10 @@ class GameVM(
 
     fun onNextRoundClick(view: View) {
         if (player1.playCardsList.isNotEmpty() && player2.playCardsList.isNotEmpty()) {
+            cardPlayerVisibility.set(View.VISIBLE)
             nextRound()
         } else {
+            cardPlayerVisibility.set(View.INVISIBLE)
             buttonEnable.set(false)
             player1VM.gameWinner()
             player2VM.gameWinner()

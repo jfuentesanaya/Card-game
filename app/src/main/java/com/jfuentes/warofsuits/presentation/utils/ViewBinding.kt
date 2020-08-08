@@ -17,7 +17,7 @@ fun View.reverseVisibility(visibility: ObservableInt) {
 
 @BindingAdapter("text_from_num_card")
 fun TextView.textFromIntInt(number: Int) {
-    this.text = number.toCardString()
+    if(number > 0) this.text = number.toCardString()
 }
 
 @BindingAdapter("image")

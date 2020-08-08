@@ -27,17 +27,16 @@ data class Card constructor(val number: Int, val suit: Suit){
             else -> "$number $suit"
         }
     }
-
-    private fun Suit.toImage(): Int {
-        return when (this) {
-            Suit.CLUBS -> R.drawable.ic_club
-            Suit.DIAMONDS -> R.drawable.ic_diamond
-            Suit.HEARTS -> R.drawable.ic_heart
-            Suit.SPADES -> R.drawable.ic_spade
-        }
-    }
 }
 
+fun Suit.toImage(): Int {
+    return when (this) {
+        Suit.CLUBS -> R.drawable.ic_club
+        Suit.DIAMONDS -> R.drawable.ic_diamond
+        Suit.HEARTS -> R.drawable.ic_heart
+        Suit.SPADES -> R.drawable.ic_spade
+    }
+}
 
 enum class Suit (internal val suitType:String){
     CLUBS("CLUBS"),
