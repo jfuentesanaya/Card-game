@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.DialogInterface
 import android.util.Log
 import android.view.View
-import androidx.annotation.StringRes
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
@@ -29,41 +28,44 @@ class GameVM(
     private val getHighestCardUseCase: GetHighestCardUseCase
 ) : AndroidViewModel(appication) {
 
-    val player1 = Player("Player 1")
-    val player2 = Player("Player 2")
+    private val player1 = Player("Player 1")
+    private val player2 = Player("Player 2")
 
     val cardToPlay1 = ObservableField<Card>()
     val cardToPlay2 = ObservableField<Card>()
 
-    val player1WinMessageVisibility = ObservableInt(View.INVISIBLE)
+    val discardCardPlayer1Visibility = ObservableInt(View.INVISIBLE)
+    val discardCardPlayer2Visibility = ObservableInt(View.INVISIBLE)
+
     val buttonEnable = ObservableBoolean(true)
 
-    val player1CardsWonText = ObservableField("")
-    val player2CardsWonText = ObservableField("")
-    val winMessage = ObservableField(getText(R.string.win))
-
     val suiPriority = ObservableField("")
+
+    val player1VM = PlayerVM(appication, player1)
+    val player2VM = PlayerVM(appication, player2)
 
     init {
        startGame()
     }
 
-    private fun startGame(){
+    private fun startGame() {
         viewModelScope.launch {
-            suiPriority.set(getText(R.string.sut_priority) + getSetOfCardsUseCase.getSuitPriority().toString())
+            suiPriority.set(
+                appication.getString(R.string.sut_priority) + getSetOfCardsUseCase.getSuitPriority().toString()
+            )
             val listOfSplitCards = getSetOfCardsUseCase.getSetOfCardsSplit()
             player1.playCardsList = listOfSplitCards.first().toMutableList()
             player2.playCardsList = listOfSplitCards.last().toMutableList()
-            nextRound()
         }
     }
 
-    fun onNextRoundClick(view:View) {
+    fun onNextRoundClick(view: View) {
         if (player1.playCardsList.isNotEmpty() && player2.playCardsList.isNotEmpty()) {
             nextRound()
         } else {
             buttonEnable.set(false)
-            winMessage.set(getText(R.string.game_winner))
+            player1VM.gameWinner()
+            player2VM.gameWinner()
             showRestartDialog(view.context)
         }
     }
@@ -103,23 +105,26 @@ class GameVM(
     private fun setWinnerVisibility(winnerCard: Card, card1: Card, card2: Card) {
         when (winnerCard) {
             card1 -> {
-                winnerVisibility(player1, card1, player1CardsWonText, true)
+                winnerVisibility(player1, card1, discardCardPlayer1Visibility, true)
             }
             card2 -> {
-                winnerVisibility(player2, card2, player2CardsWonText, false)
+                winnerVisibility(player2, card2, discardCardPlayer2Visibility, false)
             }
             else -> Log.e("Error", "This case shouldn't happen, some player has to win")
         }
     }
 
-    private fun winnerVisibility(player: Player, card: Card, playerText: ObservableField<String>, isPlayer1Winner: Boolean) {
+    private fun winnerVisibility(player: Player, card: Card, discardCardVisibility: ObservableInt, isPlayer1Winner: Boolean) {
         player.discardedCardsList.add(card)
-        player1WinMessageVisibility.set(if (isPlayer1Winner) View.VISIBLE else View.INVISIBLE)
-        playerText.set(String.format(getText(R.string.games_won), player.discardedCardsList.size))
-    }
+        discardCardVisibility.set(View.VISIBLE)
 
-    private fun getText(@StringRes idRes: Int): String {
-        return appication.baseContext.getString(idRes)
+        if (isPlayer1Winner) {
+            player1VM.win()
+            player2VM.lose()
+        } else {
+            player1VM.lose()
+            player2VM.win()
+        }
     }
 
     private fun showRestartDialog(context: Context) {
@@ -136,9 +141,10 @@ class GameVM(
         player1.clearCards()
         player2.clearCards()
         buttonEnable.set(true)
-        player1CardsWonText.set("")
-        player2CardsWonText.set("")
-        winMessage.set(getText(R.string.win))
+        discardCardPlayer1Visibility.set(View.INVISIBLE)
+        discardCardPlayer2Visibility.set(View.INVISIBLE)
+        player1VM.reset()
+        player2VM.reset()
         startGame()
     }
 }

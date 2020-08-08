@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="model"
+            type="com.jfuentes.warofsuits.presentation.viewmodel.PlayerVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            style="@style/Base.TextAppearance.Text.Alert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{model.winMessage}"
+            android:visibility="@{model.winMessageVisibility}"
+            app:layout_constraintBottom_toTopOf="@+id/iv_player1_image"
+            app:layout_constraintEnd_toEndOf="@id/tv_name_player1"
+            app:layout_constraintStart_toStartOf="@id/tv_name_player1"
+            tools:text="WIN" />
+
+        <ImageView
+            android:id="@+id/iv_player1_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_android_24"
+            app:layout_constraintBottom_toTopOf="@id/tv_name_player1"
+            app:layout_constraintEnd_toEndOf="@id/tv_name_player1"
+            app:layout_constraintStart_toStartOf="@id/tv_name_player1" />
+
+        <TextView
+            android:id="@+id/tv_name_player1"
+            style="@style/Base.TextAppearance.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{model.player.name}"
+            app:layout_constraintBottom_toTopOf="@+id/tv_player1_cards_won"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Player 1" />
+
+        <TextView
+            android:id="@+id/tv_player1_cards_won"
+            style="@style/Base.TextAppearance.Text.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{model.cardsWonText}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/tv_name_player1"
+            app:layout_constraintStart_toStartOf="@id/tv_name_player1"
+            tools:text="1 cards won" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
