@@ -10,20 +10,21 @@
     <style name="Base.TextAppearance.Text" parent="android:TextAppearance">
         <item name="android:textColor">@color/white</item>
         <item name="fontFamily">@font/poppins_light</item>
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">@dimen/text_regular</item>
     </style>
 
     <style name="Base.TextAppearance.Text.Small" parent="Base.TextAppearance.Text">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">@dimen/text_small</item>
     </style>
 
     <style name="Base.TextAppearance.Text.Enormous" parent="Base.TextAppearance.Text">
-        <item name="android:textSize">60sp</item>
+        <item name="android:textSize">@dimen/text_enormous</item>
         <item name="fontFamily">@font/title_font</item>
     </style>
 
     <style name="Base.TextAppearance.Text.Alert" parent="Base.TextAppearance.Text">
         <item name="android:textColor">@color/yellow</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>
