@@ -13,8 +13,12 @@ import com.jfuentes.warofsuits.domain.model.Suit
 class GameRepositoryImpl(private val cardDao: CardDao) : GameRepository {
 
     override suspend fun getSetOfCardsList(): List<Card> {
-        createSetOfCards()
-        return cardDao.getAll().map { it.toCard() }
+        val cards = cardDao.getAll()
+        if (cards.isEmpty()) {
+            createSetOfCards()
+        }
+
+        return cards.map { it.toCard() }
     }
 
     override suspend fun getSetOfCardsListShuffled(): List<Card> {
@@ -22,12 +26,10 @@ class GameRepositoryImpl(private val cardDao: CardDao) : GameRepository {
     }
 
     override suspend fun createSetOfCards() {
-        if(cardDao.getAll().isEmpty()){
-            cardDao.insertAll(createSet())
-        }
+        cardDao.insertAll(createSet())
     }
 
-    private fun createSet(): MutableList<CardEntity> {
+     fun createSet(): MutableList<CardEntity> {
         val listOfCards = mutableListOf<CardEntity>()
 
         for (num in 2..14) {

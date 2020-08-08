@@ -18,8 +18,16 @@ class GameRepositoryTest {
     private val repo = GameRepositoryImpl(cardDao)
 
     @Test
-    fun `should getAll cards of dao when repo is executed`() = runBlocking {
+    fun `should create cards on dao when list is empty`() = runBlocking {
         coEvery { cardDao.getAll() } returns emptyList()
+        repo.getSetOfCardsList()
+
+        coVerify(exactly = 1) { cardDao.insertAll(repo.createSet()) }
+    }
+
+    @Test
+    fun `should getAll cards of dao when repo is executed`() = runBlocking {
+        coEvery { cardDao.getAll() } returns fakeList
         repo.getSetOfCardsList()
 
         coVerify(exactly = 1) { cardDao.getAll() }
@@ -40,6 +48,11 @@ class GameRepositoryTest {
         val listShuffled = repo.getSetOfCardsListShuffled()
 
         Assert.assertNotEquals(fakeList, listShuffled)
+    }
+
+    @Test
+    fun `list of cards should be 52`() = runBlocking {
+        Assert.assertEquals(repo.createSet().size, 52)
     }
 
     companion object{
