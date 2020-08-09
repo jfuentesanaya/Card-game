@@ -13,9 +13,10 @@ import com.jfuentes.warofsuits.domain.model.Suit
 class GameRepositoryImpl(private val cardDao: CardDao) : GameRepository {
 
     override suspend fun getSetOfCardsList(): List<Card> {
-        val cards = cardDao.getAll()
+        var cards = cardDao.getAll()
         if (cards.isEmpty()) {
             createSetOfCards()
+            cards = cardDao.getAll()
         }
 
         return cards.map { it.toCard() }
