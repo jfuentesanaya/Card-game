@@ -21,19 +21,10 @@ class GetSetOfCardsUseCaseTest {
         )
 
     @Test
-    fun `suit priority should be shuffled`() {
-        runBlocking {
-            val list1 = subject.getSuitPriority()
-            val list2 = subject.getSuitPriority()
-
-            Assert.assertNotEquals(list1, list2)
-        }
-    }
-    @Test
     fun `set card should be split on two lists`() {
         runBlocking {
 
-            coEvery { subject.getSetOfCardsShuffled() } returns listOf(
+            coEvery { gameRepository.getSetOfCardsListShuffled() } returns listOf(
                 Card(2, Suit.HEARTS),
                 Card(7, Suit.SPADES),
                 Card(12, Suit.DIAMONDS),

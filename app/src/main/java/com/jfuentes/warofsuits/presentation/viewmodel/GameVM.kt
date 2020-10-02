@@ -16,6 +16,7 @@ import com.jfuentes.warofsuits.domain.model.Player
 import com.jfuentes.warofsuits.domain.model.clearCards
 import com.jfuentes.warofsuits.domain.usecase.GetHighestCardUseCase
 import com.jfuentes.warofsuits.domain.usecase.GetSetOfCardsUseCase
+import com.jfuentes.warofsuits.domain.usecase.GetSuitPriorityUseCase
 import com.jfuentes.warofsuits.presentation.utils.DialogHelper.createDialog
 import kotlinx.coroutines.launch
 
@@ -25,7 +26,8 @@ import kotlinx.coroutines.launch
 class GameVM(
     application: Application,
     private val getSetOfCardsUseCase: GetSetOfCardsUseCase,
-    private val getHighestCardUseCase: GetHighestCardUseCase
+    private val getHighestCardUseCase: GetHighestCardUseCase,
+    private val getSuitPriorityUseCase: GetSuitPriorityUseCase
 ) : AndroidViewModel(application) {
 
     private val player1 = Player("Player 1")
@@ -52,7 +54,7 @@ class GameVM(
 
     private fun startGame() {
         viewModelScope.launch {
-            suitPriorityVM.set(SuitPriorityVM(getSetOfCardsUseCase.getSuitPriority()))
+            suitPriorityVM.set(SuitPriorityVM(getSuitPriorityUseCase.getSuitPriority()))
             val listOfSplitCards = getSetOfCardsUseCase.getSetOfCardsSplit()
             player1.playCardsList = listOfSplitCards.first().toMutableList()
             player2.playCardsList = listOfSplitCards.last().toMutableList()
@@ -97,7 +99,7 @@ class GameVM(
             val winnerCard = getHighestCardUseCase.getHighestCard(
                 card1,
                 card2,
-                getSetOfCardsUseCase.getSuitPriority()
+                getSuitPriorityUseCase.getSuitPriority()
             )
 
             setWinnerVisibility(winnerCard, card1, card2)
