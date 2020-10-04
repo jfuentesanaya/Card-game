@@ -1,7 +1,7 @@
 package com.jfuentes.warofsuits.domain
 
 import com.jfuentes.warofsuits.domain.model.Card
-import com.jfuentes.warofsuits.domain.model.Suit
+import com.jfuentes.warofsuits.domain.model.PokerSuit
 import com.jfuentes.warofsuits.domain.usecase.GetSetOfCardsUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -25,10 +25,10 @@ class GetSetOfCardsUseCaseTest {
         runBlocking {
 
             coEvery { gameRepository.getSetOfCardsListShuffled() } returns listOf(
-                Card(2, Suit.HEARTS),
-                Card(7, Suit.SPADES),
-                Card(12, Suit.DIAMONDS),
-                Card(4, Suit.SPADES)
+                Card(2, PokerSuit.HEARTS),
+                Card(7, PokerSuit.SPADES),
+                Card(12, PokerSuit.DIAMONDS),
+                Card(4, PokerSuit.SPADES)
             )
             val listCardsSplit = subject.getSetOfCardsSplit()
             val list1 = listCardsSplit.first()

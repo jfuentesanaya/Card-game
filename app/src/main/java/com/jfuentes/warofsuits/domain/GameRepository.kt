@@ -7,7 +7,7 @@ import com.jfuentes.warofsuits.domain.model.Card
  */
 interface GameRepository {
 
-    suspend fun getSetOfCardsList(): List<Card>
     suspend fun getSetOfCardsListShuffled(): List<Card>
+    suspend fun getSetOfCardsList(): List<Card>
     suspend fun createSetOfCards()
 }

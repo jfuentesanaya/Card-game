@@ -5,6 +5,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.ObservableInt
+import com.jfuentes.warofsuits.R
+import com.jfuentes.warofsuits.domain.model.PokerSuit
 
 /**
  * Created by Juan Fuentes on 07/08/2020.
@@ -21,7 +23,14 @@ fun TextView.textFromIntInt(number: Int) {
 }
 
 @BindingAdapter("image")
-fun ImageView.setImageViewResource(resource: Int) {
+fun ImageView.setImageViewResource(suit: PokerSuit?) {
+    val resource = when (suit) {
+        PokerSuit.CLUBS -> R.drawable.ic_club
+        PokerSuit.DIAMONDS -> R.drawable.ic_diamond
+        PokerSuit.HEARTS -> R.drawable.ic_heart
+        PokerSuit.SPADES -> R.drawable.ic_spade
+        else ->  R.drawable.ic_spade
+    }
     this.setImageResource(resource)
 }
 

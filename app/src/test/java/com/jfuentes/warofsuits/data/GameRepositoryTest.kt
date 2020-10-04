@@ -20,7 +20,7 @@ class GameRepositoryTest {
     @Test
     fun `should create cards on dao when list is empty`() = runBlocking {
         coEvery { cardDao.getAll() } returns emptyList()
-        repo.getSetOfCardsList()
+        repo.getSetOfCardsListShuffled()
 
         coVerify(exactly = 1) { cardDao.insertAll(repo.createSet()) }
     }
@@ -28,7 +28,7 @@ class GameRepositoryTest {
     @Test
     fun `should getAll cards of dao when repo is executed`() = runBlocking {
         coEvery { cardDao.getAll() } returns fakeList
-        repo.getSetOfCardsList()
+        repo.getSetOfCardsListShuffled()
 
         coVerify(exactly = 1) { cardDao.getAll() }
     }
@@ -56,6 +56,10 @@ class GameRepositoryTest {
     }
 
     companion object{
-        val fakeList = listOf(CardEntity(2, "HEARTS"), CardEntity(3, "HEARTS"), CardEntity(5, "DIAMONDS"))
+        val fakeList = listOf(
+            CardEntity(2, "HEARTS"),
+            CardEntity(3, "HEARTS"),
+            CardEntity(5, "DIAMONDS")
+        )
     }
 }

@@ -1,7 +1,7 @@
 package com.jfuentes.warofsuits.domain
 
 import com.jfuentes.warofsuits.domain.model.Card
-import com.jfuentes.warofsuits.domain.model.Suit
+import com.jfuentes.warofsuits.domain.model.PokerSuit
 import com.jfuentes.warofsuits.domain.usecase.GetHighestCardUseCase
 import org.junit.Assert
 import org.junit.Test
@@ -15,7 +15,7 @@ import org.junit.runners.Parameterized
 class GetHighestCardUseCaseTest(
     private val player1Card: Card,
     private val player2Card: Card,
-    private val suitPriority: List<Suit>,
+    private val suitPriority: List<PokerSuit>,
     private val expectedResult: Card
 ) {
 
@@ -28,41 +28,41 @@ class GetHighestCardUseCaseTest(
     }
 
     companion object{
-        private val fakeSuitPriorityList = listOf(Suit.DIAMONDS, Suit.HEARTS, Suit.CLUBS, Suit.SPADES)
+        private val fakeSuitPriorityList = listOf(PokerSuit.DIAMONDS, PokerSuit.HEARTS, PokerSuit.CLUBS, PokerSuit.SPADES)
 
         @JvmStatic
         @Parameterized.Parameters(name = "Game {index}: {0} vs {1}, wins {3}")
         fun params(): Collection<Array<Any>> {
             return listOf(
                 arrayOf(
-                    Card(5, Suit.HEARTS),
-                    Card(3, Suit.HEARTS),
+                    Card(5, PokerSuit.HEARTS),
+                    Card(3, PokerSuit.HEARTS),
                     fakeSuitPriorityList,
-                    Card(5, Suit.HEARTS)
+                    Card(5, PokerSuit.HEARTS)
                 ),
                 arrayOf(
-                    Card(5, Suit.HEARTS),
-                    Card(3, Suit.DIAMONDS),
+                    Card(5, PokerSuit.HEARTS),
+                    Card(3, PokerSuit.DIAMONDS),
                     fakeSuitPriorityList,
-                    Card(5, Suit.HEARTS)
+                    Card(5, PokerSuit.HEARTS)
                 ),
                 arrayOf(
-                    Card(3, Suit.SPADES),
-                    Card(8, Suit.HEARTS),
+                    Card(3, PokerSuit.SPADES),
+                    Card(8, PokerSuit.HEARTS),
                     fakeSuitPriorityList,
-                    Card(8, Suit.HEARTS)
+                    Card(8, PokerSuit.HEARTS)
                 ),
                 arrayOf(
-                    Card(2, Suit.DIAMONDS),
-                    Card(6, Suit.CLUBS),
+                    Card(2, PokerSuit.DIAMONDS),
+                    Card(6, PokerSuit.CLUBS),
                     fakeSuitPriorityList,
-                    Card(6, Suit.CLUBS)
+                    Card(6, PokerSuit.CLUBS)
                 ),
                 arrayOf(
-                    Card(3, Suit.HEARTS),
-                    Card(3, Suit.DIAMONDS),
+                    Card(3, PokerSuit.HEARTS),
+                    Card(3, PokerSuit.DIAMONDS),
                     fakeSuitPriorityList,
-                    Card(3, Suit.DIAMONDS)
+                    Card(3, PokerSuit.DIAMONDS)
                 )
             )
 
