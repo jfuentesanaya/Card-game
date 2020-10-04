@@ -14,6 +14,7 @@ import com.jfuentes.warofsuits.R
 import com.jfuentes.warofsuits.domain.model.Card
 import com.jfuentes.warofsuits.domain.model.Player
 import com.jfuentes.warofsuits.domain.model.clearCards
+import com.jfuentes.warofsuits.domain.usecase.GetCardFromListUseCase
 import com.jfuentes.warofsuits.domain.usecase.GetHighestCardUseCase
 import com.jfuentes.warofsuits.domain.usecase.GetSetOfCardsUseCase
 import com.jfuentes.warofsuits.domain.usecase.GetSuitPriorityUseCase
@@ -27,7 +28,8 @@ class GameVM(
     application: Application,
     private val getSetOfCardsUseCase: GetSetOfCardsUseCase,
     private val getHighestCardUseCase: GetHighestCardUseCase,
-    private val getSuitPriorityUseCase: GetSuitPriorityUseCase
+    private val getSuitPriorityUseCase: GetSuitPriorityUseCase,
+    private val getCardFromListUseCase: GetCardFromListUseCase
 ) : AndroidViewModel(application) {
 
     private val player1 = Player("Player 1")
@@ -75,19 +77,9 @@ class GameVM(
     }
 
     private fun nextRound() {
-        getCardFromList(player1.playCardsList, cardToPlay1)
-        getCardFromList(player2.playCardsList, cardToPlay2)
+        cardToPlay1.set(getCardFromListUseCase.getCardFromList(player1.playCardsList))
+        cardToPlay2.set(getCardFromListUseCase.getCardFromList(player2.playCardsList))
         getWinner()
-    }
-
-    private fun getCardFromList(
-        playerList: MutableList<Card>,
-        cardToPlay: ObservableField<Card>
-    ) {
-        playerList.first().apply {
-            cardToPlay.set(this)
-            playerList.remove(this)
-        }
     }
 
     private fun getWinner() {
@@ -108,12 +100,8 @@ class GameVM(
 
     private fun setWinnerVisibility(winnerCard: Card, card1: Card, card2: Card) {
         when (winnerCard) {
-            card1 -> {
-                winnerVisibility(player1, card1, discardCardPlayer1Visibility, true)
-            }
-            card2 -> {
-                winnerVisibility(player2, card2, discardCardPlayer2Visibility, false)
-            }
+            card1 -> winnerVisibility(player1, card1, discardCardPlayer1Visibility, true)
+            card2 -> winnerVisibility(player2, card2, discardCardPlayer2Visibility, false)
             else -> Log.e("Error", "This case shouldn't happen, some player has to win")
         }
     }

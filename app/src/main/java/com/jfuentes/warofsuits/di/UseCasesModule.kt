@@ -1,6 +1,7 @@
 package com.jfuentes.warofsuits.di
 
 import com.jfuentes.warofsuits.domain.GameRepository
+import com.jfuentes.warofsuits.domain.usecase.GetCardFromListUseCase
 import com.jfuentes.warofsuits.domain.usecase.GetHighestCardUseCase
 import com.jfuentes.warofsuits.domain.usecase.GetSetOfCardsUseCase
 import com.jfuentes.warofsuits.domain.usecase.GetSuitPriorityUseCase
@@ -14,6 +15,7 @@ val useCasesModule = module {
     single { provideSetOfCardsUseCase(get())}
     single { provideHighestCardUseCase() }
     single { provideSuitPriorityUseCase() }
+    single { provideGetCardFromListUseCase() }
 }
 
 private fun provideSetOfCardsUseCase(repo: GameRepository): GetSetOfCardsUseCase {
@@ -26,4 +28,8 @@ private fun provideHighestCardUseCase(): GetHighestCardUseCase {
 
 private fun provideSuitPriorityUseCase(): GetSuitPriorityUseCase {
     return GetSuitPriorityUseCase()
+}
+
+private fun provideGetCardFromListUseCase(): GetCardFromListUseCase {
+    return GetCardFromListUseCase()
 }

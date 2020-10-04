@@ -12,11 +12,14 @@ class GetHighestCardUseCase {
         return when {
             card1.number > card2.number -> card1
             card1.number < card2.number -> card2
-            else -> if (suitPriority.indexOf(card1.suit) < suitPriority.indexOf(card2.suit)) {
-                card1
-            } else {
-                card2
-            }
+            else -> getHighestSuit(card1, card2, suitPriority)
+        }
+    }
+
+    private fun getHighestSuit(card1: Card, card2: Card, suitPriority: List<PokerSuit>): Card {
+        return when {
+            suitPriority.indexOf(card1.suit) < suitPriority.indexOf(card2.suit) -> card1
+            else -> card2
         }
     }
 }

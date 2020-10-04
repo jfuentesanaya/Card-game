@@ -10,6 +10,6 @@ import org.koin.dsl.module
  * Created by Juan Fuentes on 07/08/2020.
  */
 val viewModelModule = module {
-    viewModel { GameVM(androidApplication(), get(), get(), get()) }
+    viewModel { GameVM(androidApplication(), get(), get(), get(), get()) }
     viewModel { MainVM() }
 }

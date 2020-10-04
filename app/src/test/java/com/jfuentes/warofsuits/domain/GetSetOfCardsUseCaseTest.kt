@@ -24,12 +24,7 @@ class GetSetOfCardsUseCaseTest {
     fun `set card should be split on two lists`() {
         runBlocking {
 
-            coEvery { gameRepository.getSetOfCardsListShuffled() } returns listOf(
-                Card(2, PokerSuit.HEARTS),
-                Card(7, PokerSuit.SPADES),
-                Card(12, PokerSuit.DIAMONDS),
-                Card(4, PokerSuit.SPADES)
-            )
+            coEvery { gameRepository.getSetOfCardsListShuffled() } returns fakeList
             val listCardsSplit = subject.getSetOfCardsSplit()
             val list1 = listCardsSplit.first()
             val list2 = listCardsSplit.last()
@@ -38,5 +33,14 @@ class GetSetOfCardsUseCaseTest {
             Assert.assertEquals(list2.size, 2)
             Assert.assertEquals(listCardsSplit.size, 2)
         }
+    }
+
+    companion object {
+        private val fakeList = listOf(
+            Card(2, PokerSuit.HEARTS),
+            Card(7, PokerSuit.SPADES),
+            Card(12, PokerSuit.DIAMONDS),
+            Card(4, PokerSuit.SPADES)
+        )
     }
 }

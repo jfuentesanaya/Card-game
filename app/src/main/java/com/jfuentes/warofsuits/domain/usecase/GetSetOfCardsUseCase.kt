@@ -10,11 +10,19 @@ class GetSetOfCardsUseCase(private val repository: GameRepository) {
 
     suspend fun getSetOfCardsSplit(): List<List<Card>> {
         val listShuffled = repository.getSetOfCardsListShuffled()
-        val halfList = (listShuffled.size - 1) / 2
+        val numHalfList = getHalfListNumber(listShuffled)
 
-        val firstHalf = listShuffled.slice(0..halfList)
-        val secondHalf = listShuffled.slice(halfList + 1 until listShuffled.size)
+        val firstHalf = listShuffled.slice(0..numHalfList)
+        val secondHalf = listShuffled.slice(firstHalf.size until listShuffled.size)
 
         return listOf(firstHalf, secondHalf)
+    }
+
+    private fun getHalfListNumber(listShuffled: List<Card>): Int {
+        return (listShuffled.size - 1) / DIVIDER_NUM
+    }
+
+    companion object{
+        private const val DIVIDER_NUM = 2
     }
 }
