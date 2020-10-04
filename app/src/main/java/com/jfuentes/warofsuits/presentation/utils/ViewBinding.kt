@@ -7,6 +7,7 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.ObservableInt
 import com.jfuentes.warofsuits.R
 import com.jfuentes.warofsuits.domain.model.PokerSuit
+import com.jfuentes.warofsuits.domain.model.toCardString
 
 /**
  * Created by Juan Fuentes on 07/08/2020.
@@ -32,14 +33,4 @@ fun ImageView.setImageViewResource(suit: PokerSuit?) {
         else ->  R.drawable.ic_spade
     }
     this.setImageResource(resource)
-}
-
-private fun Int.toCardString(): String {
-    return when (this) {
-        11 -> "J"
-        12 -> "Q"
-        13 -> "K"
-        14 -> "A"
-        else -> "$this"
-    }
 }

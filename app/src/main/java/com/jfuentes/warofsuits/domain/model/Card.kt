@@ -13,12 +13,16 @@ data class Card constructor(val number: Int, val suit: PokerSuit){
     }
 
     override fun toString(): String {
-        return when(number){
-            11 -> "J $suit"
-            12 -> "Q $suit"
-            13 -> "K $suit"
-            14 -> "A $suit"
-            else -> "$number $suit"
-        }
+        return number.toCardString() + suit
+    }
+}
+
+fun Int.toCardString(): String {
+    return when (this) {
+        11 -> "J"
+        12 -> "Q"
+        13 -> "K"
+        14 -> "A"
+        else -> "$this"
     }
 }
